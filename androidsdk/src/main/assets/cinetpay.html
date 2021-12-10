@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.cinetpay.com/seamless/main.js"></script>
+</head>
+<body onload="init()">
+<script>
+        function init() {
+
+            CinetPay.setConfig({
+                apikey: Android.getApiKey(),
+                site_id: Android.getSiteId(),
+                notify_url: Android.getNotifyUrl(),
+                mode: "PRODUCTION",
+                type: "MOBILE"
+            });
+
+            CinetPay.getCheckout({
+                transaction_id: Android.getTransactionId(),
+                amount: Android.getAmount(),
+                currency: Android.getCurrency(),
+                description: Android.getDescription(),
+                channels: Android.getChannels(),
+                metadata: Android.getMetadata(),
+                lang: Android.getLang(),
+                alternative_currency: Android.getAlternativeCurrency(),
+                customer_id: Android.getCustomerId(),
+                customer_name: Android.getCustomerName(),
+                customer_surname: Android.getCustomerSurname(),
+                customer_email: Android.getCustomerEmail(),
+                customer_address: Android.getCustomerAddress(),
+                customer_phone_number: Android.getCustomerPhoneNumber(),
+                customer_city: Android.getCustomerCity(),
+                customer_country: Android.getCustomerCountry(),
+                customer_state: Android.getCustomerState(),
+                customer_zip_code: Android.getCustomerZipCode()
+            });
+
+            CinetPay.waitResponse(function(data) {
+                var response = JSON.stringify(data);
+                Android.onResponse(response);
+            });
+
+            CinetPay.onError(function(data) {
+                var response = JSON.stringify(data);
+                Android.onResponse(response);
+            });
+        }
+    </script>
+</body>
+</html>
